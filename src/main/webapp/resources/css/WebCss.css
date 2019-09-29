@@ -125,7 +125,7 @@ clear:left;
         position: relative;
         left: -28px;
         /* IE7-8 doesn't have border-radius, so don't indent the padding */
-        margin-bottom: 0;
+        margin-bottom: 0;	
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
@@ -134,3 +134,62 @@ clear:left;
     .search-query:focus + button {
         z-index: 3;   
     }
+.gray-hover {
+	background: #ffffff;
+}
+div.gray-hover:hover {
+	background: #f3fefe;
+}
+
+td#titleHover:hover {
+	color: #0080c0;
+}
+p#deleteBtn:hover {
+	color: #0080c0;
+}
+
+h5#mypage:hover {
+	text-decoration: underline;
+}
+li#langHover:hover {
+	text-decoration: underline;
+}
+
+pre#codeBlur {
+    filter: blur(2px);
+    -ms-user-select: none;
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    user-select:none;
+}
+div#purchaseBox {
+	width:80%; 
+	text-align: center ; 
+	position: absolute;
+	margin-left:10%;
+	margin-right:10%;
+	box-sizing: border-box;
+	background:white;
+	display:table;
+}
+div#purchaseCell{
+	 display:table-cell;
+    vertical-align:middle;
+}
+#relative{
+}
+
+#middle-side{
+	background-color: white;
+}
+body{
+	 -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	background-image: url("/spring_mybatis3/resources/img/background.jpg");
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-attachment:fixed;
+}

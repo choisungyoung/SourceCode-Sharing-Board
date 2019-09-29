@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.spring_mybatis.dao.RDao">
+
+
+	
+	
+	<insert id="insertRDao">
+		insert into reply (rid, cid, mid, rrecommend, rcontent, rdate) 
+		
+		values (rep_seq.nextval,#{cId},#{mId},0,#{rContent},current_timestamp)
+	</insert>
+	
+	<select id="listRDao" resultType="com.javalec.spring_mybatis.dto.RDto">
+	<![CDATA[
+		 SELECT REPLY.*, MEMBER.MNAME FROM REPLY, MEMBER where REPLY.cId = #{cid} and reply.mid = member.mid order by rid asc
+	]]>
+	</select>
+
+	
+	<delete id="deleteReply">
+		delete from reply
+		where rid=#{rid}
+	</delete>
+	
+	
+</mapper>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.spring_mybatis.dao.MDao">
+
+	
+	<insert id="insertMDao">
+    	INSERT INTO member
+
+        (mid , memail, mdate, mcoin, mname, mprofile)
+
+        SELECT #{mId}, #{mEmail}, to_date(sysdate,'yyyy.mm.dd hh24:mi'), 500, #{mName}, #{mProfile} FROM DUAL
+
+        WHERE NOT EXISTS (
+
+                        SELECT 0
+
+                        FROM member
+
+                        WHERE mid = #{mId}
+
+                        )
+	</insert>
+	
+	<select id="memberInfo" resultType="com.javalec.spring_mybatis.dto.MDto">
+		SELECT *
+		FROM Member
+		WHERE mid = #{mid}
+	</select>
+	
+	<select id="memberCodeList" resultType="com.javalec.spring_mybatis.dto.CDto">
+		SELECT *
+		FROM code
+		WHERE mid = #{mid}
+	</select>
+	
+	<select id="memberReplyList" resultType="com.javalec.spring_mybatis.dto.RDto">
+		SELECT *
+		FROM reply
+		WHERE mid = #{mid}
+	</select>
+	
+	<select id="memberPurchaseList" resultType="com.javalec.spring_mybatis.dto.PDto">
+		SELECT t.*
+		FROM (
+			SELECT p.*, ctitle
+			FROM purchase p, code c
+			WHERE p.cid = c.cid
+		) t
+		WHERE t.mid = #{mid}
+	</select>
+	
+	<update id="decreaseCoin">
+		UPDATE member SET mcoin=mcoin-100
+		where mid=#{mid}
+	</update>
+</mapper>

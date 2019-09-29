@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.javalec.spring_mybatis.dao.CDao">
+
+
+	<resultMap type="com.javalec.spring_mybatis.dto.CDto" id="code">
+		<id column="cid" property="cId" />
+		<result column="mid" property="mId" />
+		<result column="ctitle" property="cTitle" />
+		<result column="ccode" property="cCode" />
+		<result column="cdate" property="cDate" />
+		<result column="clang" property="cLang" />
+		<result column="cgood" property="cGood" />
+		<result column="chate" property="cHate" />
+		<result column="ccoin" property="cCoin" />
+		<result column="chit" property="cHit" />
+		<result column="ccontent" property="cContent" />
+		<result column="replycnt" property="replyCnt" />
+		<association javaType="com.javalec.spring_mybatis.dto.MDto" property="mdto">
+			<id column="mid" property="mId" />
+			<result column="memail" property="mEmail" />
+			<result column="mdate" property="mDate" />
+			<result column="mcoin" property="mCoin" />
+			<result column="mname" property="mName" />
+			<result column="mprofile" property="mProfile" />
+		</association>
+	</resultMap>
+	
+	
+	<insert id="insertCDao">
+		insert into code (cid, mid, ctitle, ccode, cdate, clang, cgood, chate, ccoin, chit, ccontent) 
+		
+		values (code_seq.nextval,#{mId},#{cTitle},#{cCode},current_timestamp,#{cLang},0,0,100,0,#{cContent})
+	</insert>
+	
+	
+	<select id="codeList" resultMap="code">
+	<![CDATA[
+		 select RN, T.* 
+		 from ( 
+		 	select ROWNUM AS RN, R.* , (
+		 			SELECT count(*) FROM reply where cid = r.cid
+		 		) as replycnt
+		 	from (
+		 		select *
+		 		from code c JOIN member m
+				ON c.mid = m.mid
+		 		order by cid desc) R
+			) T
+		 where RN between #{startCnt} and #{endCnt}
+	]]>
+	</select>
+	
+	<select id="viewCodeCDao" resultType="com.javalec.spring_mybatis.dto.CDto">
+		SELECT * FROM CODE where cId = #{cid}
+	</select>
+	
+<!-- <select id="codeList" resultMap="CDto">
+		SELECT c.cid, c.mid, c.ctitle, c.ccode, c.cdate, c.clang, c.cgood, c.chate, c.ccoin, c.chit, c.ccontent
+		m.mid , m.memail, m.mdate, m.mcoin
+		FROM code c = JOIN member m
+		ON c.mid = m.mid
+	</select> -->
+	
+	<update id="codeHitUp">
+		update code 
+		set chit = chit + 1
+		where cid = #{cId}
+	</update>
+	
+	<update id="goodCodeUp">
+		update code 
+		set cGood = cGood + 1
+		where cid = #{cId}
+	</update>
+	
+	<update id="hateCodeUp">
+		update code 
+		set cHate = cHate + 1
+		where cid = #{cId}
+		
+	</update>
+	
+	<delete id="deleteCode">
+		DELETE FROM CODE
+     	WHERE cid = #{cid}
+	</delete>
+	
+	<select id="getReplyCnt">
+		SELECT count(*) FROM reply where cid = #{cid}
+	</select>
+	
+</mapper>

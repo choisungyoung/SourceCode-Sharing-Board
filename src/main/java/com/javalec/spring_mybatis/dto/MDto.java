@@ -7,7 +7,21 @@ public class MDto {
 	private String mEmail;
 	private Date mDate;
 	private int mCoin;
+	private String mName;
+	private String mProfile;
 	
+	public String getmName() {
+		return mName;
+	}
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+	public String getmProfile() {
+		return mProfile;
+	}
+	public void setmProfile(String mProfile) {
+		this.mProfile = mProfile;
+	}
 	public String getmId() {
 		return mId;
 	}
